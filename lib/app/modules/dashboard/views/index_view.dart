@@ -3,26 +3,25 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:myapp/app/data/events-response.dart';
-import 'package:myapp/app/modules/dashboard/controllers/dashboard_controller.dart';
-import 'package:myapp/app/modules/dashboard/views/event_detail_view.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
+
+import '../controllers/dashboard_controller.dart';
+import 'event_detail_view.dart';
 
 class IndexView extends GetView {
   const IndexView({super.key});
   @override
   Widget build(BuildContext context) {
-
     DashboardController controller = Get.put(DashboardController());
     final ScrollController scrollController = ScrollController();
-    
     return Scaffold(
       appBar: AppBar(
-        // Membuat AppBar dengan judul "Event List"
         title: const Text('Event List'),
-        centerTitle: true, // Menjadikan judul di tengah AppBar
+        centerTitle: true,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0), // Memberi padding di sekitar konten
+        padding:
+            const EdgeInsets.all(16.0), // Memberi padding di sekitar konten
         child: FutureBuilder<EventResponse>(
           // Mengambil data event melalui fungsi getEvent dari controller
           future: controller.getEvent(),
@@ -34,7 +33,8 @@ class IndexView extends GetView {
                   // Menggunakan animasi Lottie untuk tampilan loading
                   'https://gist.githubusercontent.com/olipiskandar/4f08ac098c81c32ebc02c55f5b11127b/raw/6e21dc500323da795e8b61b5558748b5c7885157/loading.json',
                   repeat: true, // Animasi akan berulang terus-menerus
-                  width: MediaQuery.of(context).size.width / 1, // Menyesuaikan lebar animasi
+                  width: MediaQuery.of(context).size.width /
+                      1, // Menyesuaikan lebar animasi
                 ),
               );
             }
@@ -42,25 +42,32 @@ class IndexView extends GetView {
             if (snapshot.data!.events!.isEmpty) {
               return const Center(child: Text("Tidak ada data"));
             }
-            
+
             return ListView.builder(
               // Menentukan jumlah item berdasarkan panjang data events
               itemCount: snapshot.data!.events!.length,
-              controller: scrollController, // Menggunakan ScrollController untuk ListView
-              shrinkWrap: true, // Membatasi ukuran ListView agar sesuai dengan konten
+              controller:
+                  scrollController, // Menggunakan ScrollController untuk ListView
+              shrinkWrap:
+                  true, // Membatasi ukuran ListView agar sesuai dengan konten
               itemBuilder: (context, index) {
                 return ZoomTapAnimation(
                   onTap: () {
                     // Navigasi ke EventDetailView saat item ditekan
-                    Get.to(() => EventDetailView(), id: 1);
+                    Get.to(
+                      () => EventDetailView(
+                          eventId: snapshot.data!.events![index].id!),
+                    );
                   },
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start, // Menyusun elemen secara horizontal di kiri
+                    crossAxisAlignment: CrossAxisAlignment
+                        .start, // Menyusun elemen secara horizontal di kiri
                     children: [
                       // Menampilkan gambar event
                       Image.network(
                         'https://picsum.photos/id/${snapshot.data!.events![index].id}/700/300',
-                        fit: BoxFit.cover, // Menyesuaikan gambar dengan area tampilan
+                        fit: BoxFit
+                            .cover, // Menyesuaikan gambar dengan area tampilan
                         height: 200,
                         width: 500,
                         errorBuilder: (context, error, stackTrace) {
@@ -76,18 +83,17 @@ class IndexView extends GetView {
                       const SizedBox(height: 16), // Jarak antara elemen
                       // Menampilkan judul event
                       Text(
-                         snapshot.data!.events![index].name
-                        .toString(),
+                        snapshot.data!.events![index].name.toString(),
                         style: const TextStyle(
                           fontSize: 24,
-                          fontWeight: FontWeight.bold, // Membuat teks menjadi tebal
+                          fontWeight:
+                              FontWeight.bold, // Membuat teks menjadi tebal
                         ),
                       ),
                       const SizedBox(height: 8), // Jarak antara elemen
                       // Menampilkan deskripsi event
                       Text(
-                        snapshot.data!.events![index].description
-                        .toString(),
+                        snapshot.data!.events![index].description.toString(),
                         style: const TextStyle(
                           fontSize: 16,
                           color: Colors.grey, // Warna teks abu-abu
@@ -101,11 +107,12 @@ class IndexView extends GetView {
                             Icons.location_on,
                             color: Colors.red, // Warna ikon merah
                           ),
-                          const SizedBox(width: 8), // Jarak antara ikon dan teks
+                          const SizedBox(
+                              width: 8), // Jarak antara ikon dan teks
                           Expanded(
                             child: Text(
-                          snapshot.data!.events![index].location
-                          .toString(), // Lokasi event
+                              snapshot.data!.events![index].location
+                                  .toString(), // Lokasi event
                               style: const TextStyle(
                                 fontSize: 16,
                                 color: Colors.black, // Warna teks hitam

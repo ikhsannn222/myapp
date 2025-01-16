@@ -4,7 +4,8 @@ import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
-import 'package:myapp/app/modules/dashboard/controllers/dashboard_controller.dart';
+
+import '../controllers/dashboard_controller.dart';
 
 class AddView extends GetView {
   const AddView({super.key});

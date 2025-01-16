@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:myapp/app/modules/dashboard/controllers/dashboard_controller.dart';
-import 'package:myapp/app/modules/dashboard/views/add_view.dart';
-import 'package:myapp/app/modules/dashboard/views/edit_view.dart';
+
+import '../controllers/dashboard_controller.dart';
+import 'add_view.dart';
+import 'edit_view.dart';
 
 class YourEventView extends GetView {
   const YourEventView({super.key});
@@ -11,7 +12,6 @@ class YourEventView extends GetView {
   Widget build(BuildContext context) {
     // Mendapatkan instance dari DashboardController menggunakan GetX
     DashboardController controller = Get.put(DashboardController());
-    
 
     // Membuat instance dari ScrollController untuk kontrol scroll pada ListView
     final ScrollController scrollController = ScrollController();
@@ -112,35 +112,46 @@ class YourEventView extends GetView {
                     ],
                   ),
                   Divider(height: 10),
-                   Row(
-                mainAxisAlignment: MainAxisAlignment.end, // Posisi item di ujung kanan
-          children: [
-        // Tombol Edit buat ngedit event
-      TextButton.icon(
-      icon: const Icon(Icons.edit, color: Colors.blue), // Ikon edit dengan warna biru
-      label: const Text('Edit', style: TextStyle(color: Colors.blue)), // Teks "Edit" warna biru
-      onPressed: () {
-        // Aksi kalau tombol Edit diklik
-        Get.to(
-          () => EditView(
-            id: event.id!, // Bawa ID event ke halaman Edit
-            title: event.name!, // Bawa nama event ke halaman Edit
-          ),
-        );
-      },
-    ),
-    // Tombol Delete buat hapus event
-    TextButton.icon(
-      icon: const Icon(Icons.delete, color: Colors.red), // Ikon delete dengan warna merah
-      label: const Text('Delete', style: TextStyle(color: Colors.red)), // Teks "Delete" warna merah
-      onPressed: () {
-        controller.deleteEvent(id: event.id!);
-      },
-    ),
-  ],
-),
-      const SizedBox(
-      height: 16), // Memberikan jarak setelah garis pemisah
+
+                  Row(
+                    mainAxisAlignment:
+                        MainAxisAlignment.end, // Posisi item di ujung kanan
+                    children: [
+                      // Tombol Edit buat ngedit event
+                      TextButton.icon(
+                        icon: const Icon(Icons.edit,
+                            color: Colors.blue), // Ikon edit dengan warna biru
+                        label: const Text('Edit',
+                            style: TextStyle(
+                                color: Colors.blue)), // Teks "Edit" warna biru
+                        onPressed: () {
+                          // Aksi kalau tombol Edit diklik
+                          Get.to(
+                            () => EditView(
+                              id: event.id!, // Bawa ID event ke halaman Edit
+                              title: event
+                                  .name!, // Bawa nama event ke halaman Edit
+                            ),
+                          );
+                        },
+                      ),
+                      // Tombol Delete buat hapus event
+                      TextButton.icon(
+                        icon: const Icon(Icons.delete,
+                            color:
+                                Colors.red), // Ikon delete dengan warna merah
+                        label: const Text('Delete',
+                            style: TextStyle(
+                                color:
+                                    Colors.red)), // Teks "Delete" warna merah
+                        onPressed: () {
+                          controller.deleteEvent(id: event.id!);
+                        },
+                      ),
+                    ],
+                  ), // Membuat garis pemisah antar event
+                  const SizedBox(
+                      height: 16), // Memberikan jarak setelah garis pemisah
                 ],
               );
             },
