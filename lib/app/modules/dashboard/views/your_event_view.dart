@@ -7,6 +7,7 @@ import 'add_view.dart';
 import 'edit_view.dart';
 
 class YourEventView extends GetView {
+  // event
   const YourEventView({super.key});
   @override
   Widget build(BuildContext context) {
