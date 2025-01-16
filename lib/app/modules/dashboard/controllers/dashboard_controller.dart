@@ -155,12 +155,12 @@ void editEvent({required int id}) async {
   }
 }
 
- // Fungsi buat hapus event, tinggal kasih ID-nya
-void deleteEvent({required int id}) async {
+ void deleteEvent({required int id}) async {
+  // Kirim request POST ke server, tapi sebenarnya buat DELETE
   final response = await _getConnect.post(
-    '${BaseUrl.deleteEvents}$id',
+    '${BaseUrl.deleteEvents}$id', // URL endpoint ditambah ID event
     {
-      '_method': 'delete', 
+      '_method': 'delete', // Hack biar request diubah jadi DELETE
     },
     headers: {'Authorization': "Bearer $token"}, // Header autentikasi (token user)
     contentType: "application/json", // Data dikirim dalam format JSON
@@ -192,6 +192,7 @@ void deleteEvent({required int id}) async {
     );
   }
 }
+
 
   void changeIndex(int index) {
     selectedIndex.value = index;

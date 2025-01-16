@@ -13,4 +13,6 @@ class BaseUrl {
       'https://praujikom.smkassalaambandung.sch.id/api/events';
   static String deleteEvents =
       'https://praujikom.smkassalaambandung.sch.id/api/events';
+   static String profile =
+      'https://praujikom.smkassalaambandung.sch.id/api/profile';
 }
